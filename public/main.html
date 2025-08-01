@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - WasteExchange</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="main-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-leaf"></i>
+                <span>WasteExchange</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="/main" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/listings" class="nav-link">Browse Listings</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/dashboard" class="nav-link">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/contact" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link user-greeting" id="userGreeting">Welcome!</span>
+                </li>
+                <li class="nav-item">
+                    <button onclick="logout()" class="nav-link logout-btn">Logout</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 id="welcomeTitle">Welcome to WasteExchange</h1>
+                <p id="welcomeMessage">Your sustainable agricultural waste marketplace</p>
+                <div class="hero-buttons" id="heroButtons">
+                    <a href="/listings" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Browse Listings
+                    </a>
+                    <a href="/dashboard" class="btn btn-secondary">
+                        <i class="fas fa-chart-bar"></i> View Dashboard
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Summary -->
+        <section class="profile-section">
+            <h2><i class="fas fa-user"></i> Profile Summary</h2>
+            <div id="profileCard">
+                <div class="profile-info">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="profile-details">
+                        <h3>Loading...</h3>
+                        <span class="profile-role">User</span>
+                        <p class="profile-location">
+                            <i class="fas fa-map-marker-alt"></i> Location
+                        </p>
+                        <div class="profile-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-count">(0 reviews)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button onclick="window.location.href='/dashboard'" class="btn btn-primary">
+                        <i class="fas fa-edit"></i> Edit Profile
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Stats -->
+        <section>
+            <h2><i class="fas fa-chart-line"></i> Quick Stats</h2>
+            <div class="quick-stats" id="quickStats">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-list"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span class="stat-number">0</span>
+                        <span class="stat-label">Total Listings</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span class="stat-number">0</span>
+                        <span class="stat-label">Transactions</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span class="stat-number">$0</span>
+                        <span class="stat-label">Total Earnings</span>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span class="stat-number">0 kg</span>
+                        <span class="stat-label">Waste Recycled</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section>
+            <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+            <div class="actions-grid" id="actionsGrid">
+                <div class="action-card" onclick="window.location.href='/listings'">
+                    <div class="action-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Browse Listings</h3>
+                    <p>Find agricultural waste that meets your needs.</p>
+                    <button class="btn btn-primary">Get Started</button>
+                </div>
+                <div class="action-card" onclick="window.location.href='/dashboard'">
+                    <div class="action-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>View Analytics</h3>
+                    <p>Track your performance and earnings.</p>
+                    <button class="btn btn-primary">View Stats</button>
+                </div>
+                <div class="action-card" onclick="window.location.href='/contact'">
+                    <div class="action-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Connect</h3>
+                    <p>Get in touch and expand your network.</p>
+                    <button class="btn btn-primary">Connect</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Impact Dashboard -->
+        <section>
+            <h2><i class="fas fa-globe"></i> Impact Dashboard</h2>
+            <div id="impactMetrics">
+                <div class="impact-grid">
+                    <div class="impact-card environmental">
+                        <div class="impact-header">
+                            <i class="fas fa-leaf"></i>
+                            <h3>Environmental Impact</h3>
+                        </div>
+                        <div class="impact-stats">
+                            <div class="impact-stat">
+                                <span class="impact-number">0</span>
+                                <span class="impact-label">CO2 Saved (kg)</span>
+                            </div>
+                            <div class="impact-stat">
+                                <span class="impact-number">0</span>
+                                <span class="impact-label">Waste Recycled (kg)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="impact-card economic">
+                        <div class="impact-header">
+                            <i class="fas fa-dollar-sign"></i>
+                            <h3>Economic Impact</h3>
+                        </div>
+                        <div class="impact-stats">
+                            <div class="impact-stat">
+                                <span class="impact-number">$0</span>
+                                <span class="impact-label">Total Earnings</span>
+                            </div>
+                            <div class="impact-stat">
+                                <span class="impact-number">0</span>
+                                <span class="impact-label">Jobs Supported</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="impact-card social">
+                        <div class="impact-header">
+                            <i class="fas fa-users"></i>
+                            <h3>Social Impact</h3>
+                        </div>
+                        <div class="impact-stats">
+                            <div class="impact-stat">
+                                <span class="impact-number">0</span>
+                                <span class="impact-label">Farmers Helped</span>
+                            </div>
+                            <div class="impact-stat">
+                                <span class="impact-number">0</span>
+                                <span class="impact-label">Communities</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Activity -->
+        <section>
+            <h2><i class="fas fa-clock"></i> Recent Activity</h2>
+            <div id="activityContainer">
+                <div class="no-activity">Loading recent activity...</div>
+            </div>
+        </section>
+
+        <!-- Featured Listings -->
+        <section>
+            <h2><i class="fas fa-star"></i> Featured Listings</h2>
+            <div class="featured-grid" id="featuredGrid">
+                <div class="no-listings">Loading featured listings...</div>
+            </div>
+        </section>
+
+        <!-- Waste Reuse Suggestions -->
+        <section>
+            <h2><i class="fas fa-lightbulb"></i> Waste Reuse Suggestions</h2>
+            <div id="suggestionsContainer">
+                <div class="suggestions-grid">
+                    <div class="suggestion-card green">
+                        <div class="suggestion-header">
+                            <i class="fas fa-seedling"></i>
+                            <h4>Rice Husk</h4>
+                        </div>
+                        <ul class="suggestion-uses">
+                            <li><i class="fas fa-check-circle"></i> Biofuel production</li>
+                            <li><i class="fas fa-check-circle"></i> Building materials</li>
+                            <li><i class="fas fa-check-circle"></i> Soil amendment</li>
+                            <li><i class="fas fa-check-circle"></i> Animal bedding</li>
+                        </ul>
+                        <button onclick="searchByType('rice_husk')" class="btn btn-primary btn-small">
+                            Find Rice Husk
+                        </button>
+                    </div>
+                    <div class="suggestion-card brown">
+                        <div class="suggestion-header">
+                            <i class="fas fa-leaf"></i>
+                            <h4>Animal Manure</h4>
+                        </div>
+                        <ul class="suggestion-uses">
+                            <li><i class="fas fa-check-circle"></i> Organic fertilizer</li>
+                            <li><i class="fas fa-check-circle"></i> Biogas production</li>
+                            <li><i class="fas fa-check-circle"></i> Compost material</li>
+                            <li><i class="fas fa-check-circle"></i> Soil conditioner</li>
+                        </ul>
+                        <button onclick="searchByType('animal_manure')" class="btn btn-primary btn-small">
+                            Find Animal Manure
+                        </button>
+                    </div>
+                    <div class="suggestion-card orange">
+                        <div class="suggestion-header">
+                            <i class="fas fa-apple-alt"></i>
+                            <h4>Fruit Peels</h4>
+                        </div>
+                        <ul class="suggestion-uses">
+                            <li><i class="fas fa-check-circle"></i> Natural dyes</li>
+                            <li><i class="fas fa-check-circle"></i> Pectin extraction</li>
+                            <li><i class="fas fa-check-circle"></i> Animal feed</li>
+                            <li><i class="fas fa-check-circle"></i> Compost ingredient</li>
+                        </ul>
+                        <button onclick="searchByType('fruit_peels')" class="btn btn-primary btn-small">
+                            Find Fruit Peels
+                        </button>
+                    </div>
+                    <div class="suggestion-card yellow">
+                        <div class="suggestion-header">
+                            <i class="fas fa-wheat"></i>
+                            <h4>Crop Residue</h4>
+                        </div>
+                        <ul class="suggestion-uses">
+                            <li><i class="fas fa-check-circle"></i> Biomass fuel</li>
+                            <li><i class="fas fa-check-circle"></i> Paper production</li>
+                            <li><i class="fas fa-check-circle"></i> Mushroom cultivation</li>
+                            <li><i class="fas fa-check-circle"></i> Mulching material</li>
+                        </ul>
+                        <button onclick="searchByType('crop_residue')" class="btn btn-primary btn-small">
+                            Find Crop Residue
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Transactions -->
+        <section>
+            <h2 id="transactionsSectionTitle"><i class="fas fa-exchange-alt"></i> Recent Transactions</h2>
+            <div id="transactionsContainer">
+                <div class="no-transactions">Loading recent transactions...</div>
+            </div>
+        </section>
+
+        <!-- Recent Reviews -->
+        <section>
+            <h2><i class="fas fa-star"></i> Recent Reviews</h2>
+            <div id="reviewsContainer">
+                <div class="no-reviews">Loading recent reviews...</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Create Listing Modal -->
+    <div id="createListingModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New Listing</h3>
+                <span class="close" onclick="closeModal('createListingModal')">&times;</span>
+            </div>
+            <form id="createListingForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="type">Waste Type</label>
+                    <select id="type" name="type" required>
+                        <option value="">Select Type</option>
+                        <option value="rice_husk">Rice Husk</option>
+                        <option value="animal_manure">Animal Manure</option>
+                        <option value="fruit_peels">Fruit Peels</option>
+                        <option value="vegetable_waste">Vegetable Waste</option>
+                        <option value="crop_residue">Crop Residue</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="text" id="quantity" name="quantity" placeholder="e.g., 100 kg, 2 tons" required>
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" name="location" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="number" id="price" name="price" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="priceUnit">Price Unit</label>
+                    <select id="priceUnit" name="priceUnit" required>
+                        <option value="per_kg">Per KG</option>
+                        <option value="per_ton">Per Ton</option>
+                        <option value="per_unit">Per Unit</option>
+                        <option value="free">Free</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="expiry">Expiry Date</label>
+                    <input type="date" id="expiry" name="expiry" required>
+                </div>
+                <div class="form-group">
+                    <label for="photo">Photo (Optional)</label>
+                    <input type="file" id="photo" name="photo" accept="image/*">
+                </div>
+                <button type="submit" class="btn btn-primary">Create Listing</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Request Modal -->
+    <div id="requestModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Send Request</h3>
+                <span class="close" onclick="closeModal('requestModal')">&times;</span>
+            </div>
+            <form id="requestForm">
+                <input type="hidden" id="requestListingId" name="wasteListingId">
+                <div class="form-group">
+                    <label for="desiredQuantity">Desired Quantity</label>
+                    <input type="text" id="desiredQuantity" name="desiredQuantity" placeholder="e.g., 50 kg" required>
+                </div>
+                <div class="form-group">
+                    <label for="requestMessage">Message</label>
+                    <textarea id="requestMessage" name="message" rows="4" placeholder="Tell the farmer about your needs..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div id="reviewModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Leave Review</h3>
+                <span class="close" onclick="closeModal('reviewModal')">&times;</span>
+            </div>
+            <form id="reviewForm">
+                <input type="hidden" id="reviewRequestId" name="requestId">
+                <input type="hidden" id="revieweeId" name="revieweeId">
+                <input type="hidden" id="rating" name="rating" value="5">
+                <div class="form-group">
+                    <label>Rating</label>
+                    <div id="ratingInput" class="rating-input">
+                        <i class="fas fa-star active"></i>
+                        <i class="fas fa-star active"></i>
+                        <i class="fas fa-star active"></i>
+                        <i class="fas fa-star active"></i>
+                        <i class="fas fa-star active"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reviewComment">Comment</label>
+                    <textarea id="reviewComment" name="comment" rows="4" placeholder="Share your experience..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

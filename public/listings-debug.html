@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Listings - WasteExchange</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container" style="padding-top: 100px;">
+        <h1>🔍 Debug Listings Page</h1>
+        
+        <div class="debug-section">
+            <h2>Connection Test</h2>
+            <button onclick="testConnection()" class="btn btn-primary">Test Server Connection</button>
+            <div id="connectionResult"></div>
+        </div>
+        
+        <div class="debug-section">
+            <h2>API Test</h2>
+            <button onclick="testAPI()" class="btn btn-secondary">Test Listings API</button>
+            <div id="apiResult"></div>
+        </div>
+        
+        <div class="debug-section">
+            <h2>Database Test</h2>
+            <button onclick="testDatabase()" class="btn btn-info">Test Database</button>
+            <div id="databaseResult"></div>
+        </div>
+        
+        <div class="debug-section">
+            <h2>Current URL Info</h2>
+            <div id="urlInfo"></div>
+        </div>
+        
+        <div class="debug-section">
+            <h2>Browser Console</h2>
+            <p>Open browser console (F12) to see detailed error messages</p>
+        </div>
+    </div>
+
+    <script>
+        // Display current URL info
+        document.getElementById('urlInfo').innerHTML = `
+            <p><strong>Current URL:</strong> ${window.location.href}</p>
+            <p><strong>Host:</strong> ${window.location.host}</p>
+            <p><strong>Protocol:</strong> ${window.location.protocol}</p>
+            <p><strong>Port:</strong> ${window.location.port || 'default'}</p>
+        `;
+
+        async function testConnection() {
+            const result = document.getElementById('connectionResult');
+            result.innerHTML = '<p>Testing connection...</p>';
+            
+            try {
+                const response = await fetch('/api/health');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    result.innerHTML = `
+                        <div class="alert alert-success">
+                            <h4>✅ Server Connection Successful!</h4>
+                            <p>Status: ${data.status}</p>
+                            <p>Message: ${data.message}</p>
+                            <p>Version: ${data.version}</p>
+                        </div>
+                    `;
+                } else {
+                    result.innerHTML = `
+                        <div class="alert alert-error">
+                            <h4>❌ Server Error</h4>
+                            <p>Status: ${response.status}</p>
+                            <p>Message: ${data.message || 'Unknown error'}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                result.innerHTML = `
+                    <div class="alert alert-error">
+                        <h4>❌ Connection Failed</h4>
+                        <p>Error: ${error.message}</p>
+                        <p>Make sure your server is running on localhost:3000</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testAPI() {
+            const result = document.getElementById('apiResult');
+            result.innerHTML = '<p>Testing API...</p>';
+            
+            try {
+                const response = await fetch('/api/waste?limit=3');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    result.innerHTML = `
+                        <div class="alert alert-success">
+                            <h4>✅ API Working!</h4>
+                            <p>Found ${data.total || 0} listings</p>
+                            <p>Current page: ${data.currentPage || 1}</p>
+                            <p>Total pages: ${data.totalPages || 1}</p>
+                            ${data.listings && data.listings.length > 0 ? 
+                                `<p>Sample listing: ${data.listings[0].title}</p>` : 
+                                '<p>No listings found</p>'
+                            }
+                        </div>
+                    `;
+                } else {
+                    result.innerHTML = `
+                        <div class="alert alert-error">
+                            <h4>❌ API Error</h4>
+                            <p>Status: ${response.status}</p>
+                            <p>Message: ${data.message || 'Unknown error'}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                result.innerHTML = `
+                    <div class="alert alert-error">
+                        <h4>❌ API Request Failed</h4>
+                        <p>Error: ${error.message}</p>
+                        <p>Check if your server is running and routes are configured</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testDatabase() {
+            const result = document.getElementById('databaseResult');
+            result.innerHTML = '<p>Testing database...</p>';
+            
+            try {
+                // Test multiple endpoints
+                const [healthResponse, wasteResponse] = await Promise.all([
+                    fetch('/api/health'),
+                    fetch('/api/waste?limit=1')
+                ]);
+                
+                const healthData = await healthResponse.json();
+                const wasteData = await wasteResponse.json();
+                
+                result.innerHTML = `
+                    <div class="alert alert-info">
+                        <h4>📊 Database Status</h4>
+                        <p><strong>Health Check:</strong> ${healthData.status || 'Unknown'}</p>
+                        <p><strong>Listings Available:</strong> ${wasteData.total || 0}</p>
+                        <p><strong>Database Connection:</strong> ${wasteResponse.ok ? '✅ Connected' : '❌ Failed'}</p>
+                        ${wasteData.total === 0 ? 
+                            '<p class="warning">⚠️ No data found. Run: npm run seed</p>' : 
+                            '<p class="success">✅ Data found in database</p>'
+                        }
+                    </div>
+                `;
+            } catch (error) {
+                result.innerHTML = `
+                    <div class="alert alert-error">
+                        <h4>❌ Database Test Failed</h4>
+                        <p>Error: ${error.message}</p>
+                        <p>Check MongoDB connection and seeding</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Auto-run tests on page load
+        window.addEventListener('load', () => {
+            console.log('🔍 Debug page loaded');
+            console.log('Current URL:', window.location.href);
+            console.log('Expected URL should be: http://localhost:3000/listings-debug.html');
+            
+            if (!window.location.href.includes('localhost:3000')) {
+                document.body.innerHTML = `
+                    <div class="container" style="padding-top: 100px;">
+                        <div class="alert alert-error">
+                            <h1>❌ Wrong URL!</h1>
+                            <p>You're accessing: <strong>${window.location.href}</strong></p>
+                            <p>You should access: <strong>http://localhost:3000/listings-debug.html</strong></p>
+                            <h3>Steps to fix:</h3>
+                            <ol>
+                                <li>Make sure your server is running: <code>npm start</code></li>
+                                <li>Open: <code>http://localhost:3000/listings-debug.html</code></li>
+                                <li>NOT listings.it or any other domain</li>
+                            </ol>
+                        </div>
+                    </div>
+                `;
+            }
+        });
+    </script>
+
+    <style>
+        .debug-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .debug-section h2 {
+            color: #2d5a27;
+            margin-bottom: 15px;
+        }
+        .alert {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .alert-error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .alert-info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        .warning {
+            color: #856404;
+            font-weight: bold;
+        }
+        .success {
+            color: #155724;
+            font-weight: bold;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</body>
+</html>

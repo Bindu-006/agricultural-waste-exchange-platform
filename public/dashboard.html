@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - WasteExchange</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-leaf"></i>
+                <span>WasteExchange</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="/dashboard" class="nav-link">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/listings" class="nav-link">Browse Listings</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/contact" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <button onclick="logout()" class="nav-link logout-btn">Logout</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <div class="dashboard-title">
+                <h1>Dashboard</h1>
+                <p>Welcome back! Here's your activity overview.</p>
+            </div>
+            <div class="user-info">
+                <div class="user-name" id="userName">Loading...</div>
+                <div class="user-role" id="userRole">Loading...</div>
+            </div>
+        </div>
+
+        <div class="stats-grid" id="statsGrid">
+            <!-- Stats will be loaded dynamically -->
+        </div>
+
+        <div class="dashboard-content">
+            <div class="main-content">
+                <h2 class="section-title" id="mainSectionTitle">Recent Activity</h2>
+                <div id="mainContent">
+                    <!-- Content will be loaded based on user role -->
+                </div>
+            </div>
+            
+            <div class="sidebar-content">
+                <h3 class="section-title">Quick Actions</h3>
+                <div id="quickActions">
+                    <!-- Quick actions will be loaded based on user role -->
+                </div>
+                
+                <h3 class="section-title">Recent Activity</h3>
+                <div id="recentActivity">
+                    <!-- Recent activity will be loaded -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Modal for creating new listing -->
+    <div id="createListingModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New Listing</h3>
+                <span class="close" onclick="closeModal('createListingModal')">&times;</span>
+            </div>
+            <form id="createListingForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="type">Waste Type</label>
+                        <select id="type" name="type" required>
+                            <option value="">Select type</option>
+                            <option value="rice_husk">Rice Husk</option>
+                            <option value="animal_manure">Animal Manure</option>
+                            <option value="fruit_peels">Fruit Peels</option>
+                            <option value="vegetable_waste">Vegetable Waste</option>
+                            <option value="crop_residue">Crop Residue</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Quantity</label>
+                        <input type="text" id="quantity" name="quantity" placeholder="e.g., 50 kg, 2 tons" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <input type="number" id="price" name="price" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="priceUnit">Price Unit</label>
+                        <select id="priceUnit" name="priceUnit" required>
+                            <option value="per_kg">Per KG</option>
+                            <option value="per_ton">Per Ton</option>
+                            <option value="per_unit">Per Unit</option>
+                            <option value="free">Free</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" name="location" required>
+                </div>
+                <div class="form-group">
+                    <label for="expiry">Expiry Date</label>
+                    <input type="date" id="expiry" name="expiry" required>
+                </div>
+                <div class="form-group">
+                    <label for="photo">Photo</label>
+                    <input type="file" id="photo" name="photo" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Listing</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
